@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="manage_remark_tree">
+				<field name="name">remarks.category.tree</field>
+				<field name="model">remarks.category</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree  >
+						<field name="description"/>
+						<field name="name" />
+						
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="manage_remark_form">
+				<field name="name">remarks.category.form</field>
+				<field name="model">remarks.category</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					
+					<sheet>
+					<form >
+						<group>
+							<field name="description" style="width:50%" readonly="1"/>
+							<field name="name" style="width:80%" required="1"/>
+						</group>
+					</form>			
+					</sheet>
+
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='manage_remark_action'>
+				<field name="name">Manage Remark Category</field>
+				<field name='res_model'>remarks.category</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="Manage Remark Category" parent='adminstration_setup_left' id='manage_remark_category_id' sequence="4" action='manage_remark_action' />
+
+			<!-- hiding messaging menuitem on top and inheriting users menuitem from settings -->
+			<record id="make_invisible" model="res.groups">
+		    	<field name="name">Invisible</field>
+			</record>
+
+			<record model="ir.ui.menu" id="mail.mail_feeds_main">
+			    <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+			</record>
+			<menuitem name="User Management" id="base.menu_users" parent="adminstration_setup_left" sequence="5"/>
+		</data>
+	</openerp>
+		

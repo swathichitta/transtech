@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="atm_details_tree">
+				<field name="name">atm.info.tree</field>
+				<field name="model">atm.info</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree string="ATM Information">
+						<field name="atm_code"/>
+						<field name="name"/>
+						<field name="atm_id" string="Bank ATM ID"/>
+						<field name="customer"/>
+						<field name="atm_type"/>
+						<field name="state_id"/>
+						<!-- <field name="visits_done" sum="Total"/> -->
+						<!-- <field name="visits_left" sum="Total"/> -->
+						<!-- <field name="visits_total" sum="Total"/> -->
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="atm_details_form">
+				<field name="name">atm.info.form</field>
+				<field name="model">atm.info</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					
+					<form string="ATM Details" >
+					<header>
+						<button name="%(action_atm_view_wizard)d" class="oe_highlight" string="Move ATM" type="action" groups="transtech.group_atm_manager,transtech.group_atm_customer"/>
+					</header>
+					<sheet>
+						<h3>ATM Image</h3>
+						<field name="atm_image" widget="image" class="oe_avatar oe_left" options='{"size": [100, 100]}'/>
+						<group>
+							<field name="atm_code" readonly="1"/>
+							<field name="name" required="1"/>
+							<field name="atm_id" required="1"/>
+							<field name="date"/>
+						</group>
+						<notebook>
+							<page string="Basic Info">
+								<group>
+									<field name="atm_type" required="1"/>
+									<field name="customer" required="1" on_change="onchange_customer(customer)"/>
+									<field name="country"/>
+									<field name="state_id" required="1"/>
+									<field name="sla_start"/>
+									<field name="sla_end"/>
+									<!-- <field name="no_of_visits"/> -->
+									<field name="comments"/>
+								</group>
+							</page>
+							<page string="Mapping">
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tbody>
+										<tr>
+											<td>
+										<group>
+											<field name="longitude"/>
+											<field name="latitude"/>
+											 <field name="id" widget="location_map" nolabel="1"></field>
+										</group>
+									</td>
+											<td style="padding-left: 15px; padding-top: 15px" width="100%%">
+									<field name="id" widget="location_map" nolabel="1"></field>
+								</td>
+								</tr>
+								</tbody>
+							</table>
+			
+								<button name="geo_localize" string="View Map" type="object" icon="gtk-zoom-in"/>
+								<group>
+									<field name="no_tasks" groups="transtech.group_atm_manager"/>
+								</group>
+							</page>
+							<page string="ATM Old Locations">
+                            	<field name="child_ids" readonly="1">
+                            		<tree string="ATM Moves">
+	                                    <field name="name"/>
+	                                    <field name="longitude"/>
+	                                    <field name="latitude"/>
+	                                    <field name="date"/>
+                            		</tree>
+                            		<form string="Contact">
+                                		<sheet>
+                                			<group>
+                                    			<field name="name"/>
+			                                    <field name="longitude"/>
+			                                    <field name="latitude"/>
+			                                    <field name="date"/>
+		                                	</group>
+		                                </sheet>
+		                            </form>
+                            	</field>
+                            </page>
+
+                            <page string="ATM Inventory">
+                            	<group>
+	                            	<group>
+	                        			<field name="atm_id2"/>
+	                        			<field name="atm_model"/>
+	                        			<field name="serial_no"/>
+	                                    <field name="atm_make"/>
+	                                    <field name="atm_functionality"/>
+	                                    <field name="base_height"/>
+	                                    <field name="location_cat"/>
+	                                    <field name="onsite_cat" attrs="{'invisible':[('location_cat','=','offsite')]}"/>
+	                                    <field name="offsite_cat" attrs="{'invisible':[('location_cat','=','onsite')]}"/>
+	                            	</group>
+
+	                            	<group>
+	                        			<field name="kiosk_type"/>
+	                                    <field name="branding_details"/>
+	                                    <field name="installation_date"/>
+	                                    <field name="removed_from"/>
+	                            	</group>
+	                            	<group string="Network Equipment Details">
+	                                    <field name="device1"/>
+	                                    <field name="device2"/>
+	                                    <field name="device3"/>
+	                                    <field name="device4"/>
+	                                    <field name="device5"/>
+	                                </group>
+
+	                                <group string="ATM DVR">
+	                                    <field name="make"/>
+	                                    <field name="model"/>
+	                                    <field name="capacity"/>
+	                                    <field name="detail1"/>
+	                                    <field name="detail2"/>
+	                                </group>
+
+	                            	<group>
+	                                    <field name="escorting_comp"/>
+	                                    <field name="ded_num"/>
+	                            	</group>
+
+                            	</group>
+                            </page>
+						</notebook>
+					</sheet>
+				</form>			
+
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='atm_details_action'>
+				<field name="name">ATM details</field>
+				<field name='res_model'>atm.info</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			
+			<menuitem name="ATM details" parent='customer_atm_setup' id='atm_details_id' sequence="2" action='atm_details_action' />
+		</data>
+	</openerp>
+		

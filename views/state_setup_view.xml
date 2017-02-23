@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="state_setup_tree">
+				<field name="name">res.country.state.tree</field>
+				<field name="model">res.country.state</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree string="State Information">
+						<field name="name"/>
+						<field name="code"/>
+						<field name="country_id"/>
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="state_setup_form">
+				<field name="name">res.country.state.form</field>
+				<field name="model">res.country.state</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					
+					<form string="State Details" >
+						<sheet>
+							<group>
+								<field name="name"/>
+								<field name="code"/>
+								<field name="country_id"/>
+							</group>
+						</sheet>
+					</form>
+
+				</field>
+			</record>
+
+			<record id="state_setup_action" model="ir.actions.act_window">
+				<field name="name">State Setup</field>
+			   <field name="type">ir.actions.act_window</field>
+			   <field name="res_model">res.country.state</field>
+			   <field name="view_type">form</field>
+			   <field name="view_id" ref="state_setup_tree"/>
+			   <field name="view_mode">tree,form</field>         
+			   <field name="help" type="html">
+              		<p class="oe_view_nocontent_create">
+                	Click to add new States.....
+              		</p>
+					
+               	</field>
+			</record>
+			 
+			<menuitem name="State Setup" parent='adminstration_setup_left' id='state_setup_id' sequence="2" action='state_setup_action' />
+		</data>
+	</openerp>
+		

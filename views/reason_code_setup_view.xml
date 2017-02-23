@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="reason_code_setup_tree">
+				<field name="name">reason.code.tree</field>
+				<field name="model">reason.code</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree  >
+						<field name="reason_code"/>
+						<field name="name" />
+
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="reason_code_setup_form">
+				<field name="name">reason.code.form</field>
+				<field name="model">reason.code</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					<sheet>
+					<form >
+						<group >
+							<field name="name" style="width:50%" readonly="1"/>
+							<field name="reason_code" style="width:50%" />
+						</group>
+					</form>			
+					</sheet>
+
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='reason_code_setup_action'>
+				<field name="name">Reason Code Setup</field>
+				<field name='res_model'>reason.code</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="Reason Code Setup" parent='adminstration_setup_left' id='reason_code_setup_id' sequence="3" action='reason_code_setup_action' />
+		</data>
+	</openerp>
+		

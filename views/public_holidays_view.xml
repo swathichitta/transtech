@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="public_holidays_tree">
+				<field name="name">public.holidays.tree</field>
+				<field name="model">public.holidays</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree string="Public Holidays">
+	                    <field name="year"/>
+	                </tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="public_holidays_form">
+				<field name="name">public.holidays.form</field>
+				<field name="model">public.holidays</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					<form string="Public Holidays">
+	                    <group>
+	                        <field name="year"/>
+	                    </group>
+	                    <newline/>
+	                    <group string="Public Holidays" colspan="4" col="1">
+	                        <field name="line_ids" nolabel="1" >
+	                        	<tree string="Public Holidays" editable="top">
+			                        <field name="date" required="1"/>
+			                        <field name="name" required="1"/>
+			                        <field name="variable"/>
+		                   		</tree>
+		                   	</field>
+	                    </group>
+	                </form>			
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='public_holidays_action'>
+				<field name="name">Public Holidays</field>
+				<field name='res_model'>public.holidays</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="Administration Setup" id="adminstration_setup_left" sequence="6" parent="atm_survey_management"/>
+			<menuitem name="Public Holidays" parent='adminstration_setup_left' id='public_holidays_id' sequence="1" action='public_holidays_action' />
+		</data>
+	</openerp>
+		

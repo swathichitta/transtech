@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="schedule_tasks_tree">
+				<field name="name">schedule.tasks.tree</field>
+				<field name="model">schedule.tasks</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree  >
+						<field name="schedule_id" />
+						<field name="customer" />
+						<field name="atm" />
+						<field name="country" />
+						<field name="state" />
+						<field name="surveyor" />
+						<field name="visit_type"/>
+						<field name="status"/>
+						
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="schedule_tasks_form">
+				<field name="name">schedule.tasks.form</field>
+				<field name="model">schedule.tasks</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					<form string="Scheduled Tasks">
+						<header>
+							<button name="status_done" type="object" String="Done" class="oe_highlight"  attrs="{'invisible': [('status','in',('done','cancel'))]}"/>
+							<button name="status_cancel" type="object" String="Cancel" attrs="{'invisible': [('status','in',('done','cancel'))]}"/>
+							<field name="status" widget="statusbar" statusbar_visible="assigned,pending,cancel,progress,waitnig_approve,done"/> 
+
+						</header>
+						<sheet>
+							<group>
+								<group>
+									<field name="schedule_id" readonly="1"/>
+									<field name="customer" required="1"/>
+									<field name="state" required="1"/>
+									<field name="atm" required="1"/>
+									<field name='visit_shift' required="1"/>
+									<field name="country" required="1"/>
+									<field name="surveyor" required="1"/>
+									<field name="start_date" required="1"/>
+									<field name="additional_info"/>
+									<field name="bulk_insert" />
+								
+									<field name="visit_type" string="Visit Type/ No. of Visits to be done" required="1"/>
+								</group>
+								<group string="Visit Details" >
+									<field name="remarks_id" />
+									<field name="remarks" />
+									<field name="next_visit" string="Next Execution" readonly="1"/>
+								</group>
+							
+							</group>
+						</sheet>
+				
+					</form>
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='schedule_tasks_action'>
+				<field name="name">Schedule Tasks</field>
+				<field name='res_model'>schedule.tasks</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="Tasks Management" id="tasks_management_left" parent="atm_survey_management" sequence="4"/>
+			<menuitem name="Schedule Tasks" parent='tasks_management_left' id='schedule_tasks_id' sequence="2" action='schedule_tasks_action' />
+		</data>
+	</openerp>
+		

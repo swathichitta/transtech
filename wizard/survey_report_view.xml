@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			
+	
+			<record model="ir.ui.view" id="wizard_survey_report_form">
+				<field name="name">survey.report.wizard</field>
+				<field name="model">survey.report</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					
+					<form string="Survey Report">
+						<p class="oe_grey">This wizard helps you to filter survey reports by dates.
+							<br/><br/>
+						If you want to quit click on Cancel.</p> 
+						<group >
+							<field name="from_date" style="width:50%" required="1"/>
+							<field name="to_date" style="width:50%" required="1"/>
+							<field name="customer_info" style="width:30%" />
+						</group>
+						<footer>
+							<button name="view_report" string="View Report" type="object" class="oe_highlight"/>
+							<button string="Cancel" special="cancel" icon="gtk-cancel"/>
+						</footer>
+					</form>			
+
+				</field>
+			</record>
+
+			<record id="action_survey_report_wizard" model="ir.actions.act_window">
+				<field name="name">Survey Report</field>
+				<field name="type">ir.actions.act_window</field>
+				<field name="res_model">survey.report</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">form</field>
+				<field name="view_id" ref="wizard_survey_report_form"/>
+				<field name="target">new</field>
+			</record>
+			
+			<menuitem action="action_survey_report_wizard" name="Survey Report" parent='survey_details_left' id='survey_reports_id' sequence="3"  />
+		  
+		</data>
+	</openerp>
+		

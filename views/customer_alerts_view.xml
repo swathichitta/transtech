@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="customer_alerts_tree">
+				<field name="name">Customer Alerts Tree</field>
+				<field name="model">customer.alerts</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree  >
+						<field name="name" />
+						<field name="customer"/>
+						<field name="atm_id"/>
+						<field name="priority"/>
+						<field name="summary" />
+						<field name="status"/> 
+						<field name="category" />
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="customer_alerts_form">
+				<field name="name">Customer Alerts Form</field>
+				<field name="model">customer.alerts</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					<form>
+						<header>
+							<button name="status_resolve" type="object" String="Resolve" attrs="{'invisible': [('status','in',('resolved','closed'))]}" class="oe_highlight"/>
+							<button name="status_close" type="object" String="Close"  attrs="{'invisible': [('status','in',('assigned','closed'))]}" class="oe_highlight"/>
+							<field name="status" widget="statusbar" statusbar_visible="assigned,resolved,closed"/> 
+						</header>
+						<sheet>
+							<group>
+								<group>
+									<field name="name" readonly="1"/>
+									<field name="customer"/>
+									<field name="created_by" invisible="1"/>
+									<field name="atm_id" required="1"/>
+									<field name="category" required="1"/>
+									<field name="priority" required="1"/>
+									<field name="country_id" />
+									<field name="state_id" />
+									<field name="submitted_by" readonly="1"/>
+								</group>
+								<group string="Alert Categorization Details">
+									<field name="reason_id"/>
+									<field name="reason_disc"/>
+								</group>
+								<group string="Summary &amp; Description">
+									<field name="summary" />
+									<field name="description"/>
+								</group>
+								<newline/>
+								<group string="Error Images">
+									<field name="image" widget="image" nolabel="1" class="oe_avatar oe_left" />
+									<field name="image_2" widget="image" nolabel="1" class="oe_avatar oe_left"/>
+									<field name="image_3" widget="image" nolabel="1" class="oe_avatar oe_left"/>
+								</group>
+							</group>
+						</sheet>			
+					</form>
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='customers_alerts_action'>
+				<field name="name">Customer Alerts</field>
+				<field name='res_model'>customer.alerts</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="Alerts" id="alerts_left_id" parent="atm_survey_management" sequence="5"/>
+			<menuitem name="Customer Alerts" parent='alerts_left_id' id='customer_alerts_id' sequence="1" action='customers_alerts_action' />
+		</data>
+	</openerp>
+		

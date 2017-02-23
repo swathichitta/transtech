@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="internal_alerts_tree">
+				<field name="name">internal.alerts.tree</field>
+				<field name="model">internal.alerts</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree string="Alert Information">
+						<field name="name"/>
+						<field name="customer"/>
+						<field name="atm_id"/>
+						<field name="priority"/>
+						<field name="summary"/>
+						<field name="status"/>
+						<field name="assign_to"/>
+						<field name="category"/>
+					</tree>
+				</field>
+			</record>
+	
+			<record model="ir.ui.view" id="internal_alerts_form">
+				<field name="name">internal.alerts.form</field>
+				<field name="model">internal.alerts</field>
+				<field name="type">form</field>
+				<field name="arch" type="xml">
+					
+					<form string="Alert Details Internal">
+					<header>
+					<button name="status_resolve" type="object" String="Resolve"  attrs="{'invisible': [('status','in',('resolved','closed'))]}" class="oe_highlight"/>
+					<button name="status_close" type="object" String="Close"  attrs="{'invisible': [('status','in',('assigned','closed'))]}" class="oe_highlight"/>
+					<field name="status" widget="statusbar" statusbar_visible="assigned,resolved,closed"/> 
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" readonly="1"/>
+								<field name="customer" attrs="{'readonly':[('status','!=','assigned')]}"/>
+								<field name="user" attrs="{'readonly':[('status','!=','assigned')]}"/>
+								<field name="atm_id" attrs="{'readonly':[('status','!=','assigned')]}" required="1"/>
+								<field name="category" attrs="{'readonly':[('status','!=','assigned')]}" required="1"/>
+								<field name="priority" attrs="{'readonly':[('status','!=','assigned')]}" required="1"/>
+								<field name="country_id" attrs="{'readonly':[('status','!=','assigned')]}"/>
+								<field name="state_id" attrs="{'readonly':[('status','!=','assigned')]}"/>
+								<field name="assign_to" attrs="{'readonly':[('status','!=','assigned')]}"/>
+							</group>
+							<group string="Alert Categorization Details">
+								<field name="reason_id" attrs="{'readonly':[('status','!=','assigned')]}"/>
+								<field name="reason_disc" attrs="{'readonly':[('status','!=','assigned')]}"/>
+							</group>
+							<group string="Summary &amp; Description">
+								<field name="summary" attrs="{'readonly':[('status','!=','assigned')]}"/>
+								<field name="description" attrs="{'readonly':[('status','!=','assigned')]}"/>
+							</group>
+						</group>
+					</sheet>
+				</form>		
+
+				</field>
+			</record>
+
+			<record model='ir.actions.act_window' id='internal_alerts_action'>
+				<field name="name">Internal Alerts</field>
+				<field name='res_model'>internal.alerts</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="Internal Alerts" parent='alerts_left_id' id='internal_alerts_id' sequence="2" action='internal_alerts_action' />
+		</data>
+	</openerp>
+		

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+   <data>
+
+      <template id="tasks_inqueue_report_document">
+          <t t-call="report.external_layout"/>
+      </template>
+
+      <template id="tasks_inqueue_report">
+         <t t-call="report.html_container">
+               <br/><br/><br/>
+               <div class="page">
+                  <div class="oe_structure"/>
+                  <div class="row">
+
+                     <t t-foreach="docs" t-as="o">
+                        
+                        <table style=" border:solid black;border-width:1px;width:100%;">
+                           <tr colspan="4" style="border:solid black;border-width:1px;font-size: 18px;">
+                               <th colspan="4" style="border:solid black;border-width:1px;padding:10px;text-align:left;font-name: 'Helvetica';color:#C00000;">Guest Information</th>
+                           </tr>
+                           <tr colspan="4" style="border:solid black;border-width:1px;font-size: 18px;">
+                               <th style="border:solid black;border-width:1px;padding:10px 5px 15px;text-align:center;font-name: 'Helvetica';">Booking No.</th>
+                               <td style="border:solid black;border-width:1px;padding:10px 5px 15px;text-align:center;"><span t-field="o.booking_no"/></td>
+                             
+                           </tr> 
+                           <tr colspan="4" style="border:solid black;border-width:1px;font-size: 18px;">
+                               <th style="border:solid black;border-width:1px;padding:10px 5px 15px;text-align:center;font-name: 'Helvetica';">Mobile No.</th>
+                               <td style="border:solid black;border-width:1px;padding:10px 5px 15px;text-align:center;"><span t-field="o.mobile_no"/></td>
+                           </tr>
+                           <t t-foreach='o.guests' t-as='value'>
+                             <tr colspan="4" style="border:solid black;border-width:1px;font-size: 18px;">
+                                 <th style="border:solid black;border-width:1px;padding:10px 5px 15px;text-align:center;font-name: 'Helvetica';">Guest Name</th>
+                                 <td style="border:solid black;border-width:1px;padding:10px 5px 15px;text-align:center;"><span t-field="value.name"/></td>
+                             </tr>
+                           </t>
+                        </table>
+                        
+                        </t>
+                      </div>
+                    </div>
+                  </t>
+                </template>
+              </data>
+            </openerp>
+            

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<openerp>
+		<data>
+
+
+			<record model='ir.actions.act_window' id='plan_tasks_action'>
+				<field name="name">Plan Tasks</field>
+				<field name='res_model'>tasks.queue</field>
+				<field name="view_mode">tree,form</field>
+			</record>
+			 
+			<menuitem name="View/Plan Tasks" parent='tasks_management_left' id='view_plan_tasks' sequence="1" action='plan_tasks_action' />
+		</data>
+	</openerp>
+		
