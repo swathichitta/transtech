@@ -38,7 +38,8 @@
 				"views/reason_code_setup_view.xml",
 				"views/manage_remark_category_view.xml",
 
-				"data/mail_data.xml",
+				# "data/mail_data.xml",
+				"data/customer_alerts_mail_template.xml",
 
 			],
 

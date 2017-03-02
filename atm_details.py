@@ -221,6 +221,7 @@ class ATM_details(osv.osv):
 			return float(geo['lat']), float(geo['lng'])
 		return True
 
+
 	def name_get(self,cr,uid,ids,context=None):
 		if context is None:
 			context ={}
@@ -230,8 +231,17 @@ class ATM_details(osv.osv):
 
 			# if object.name:
 			if object.latitude and object.longitude:
+				# print "oooooooooooooooooo",object.name
+				# print "o11111111111111111o",object.atm_id
+				# print "o22222222222222222o",object.latitude
+				# print "o33333333333333333o",object.longitude
+				# x=(object.name+', '+object.atm_id+', '+'%%'+object.latitude+'%%'+object.longitude)
+				# print "999999999999999",type(str(x))
+				# print "o55555555555555555o",type(object.id )
+				# print "o66666666666666666o",object.name
+				# print "o777777777777777777o",object.name
 				  # name for contact_address_id field
-				res.append((object.id,object.name+', '+object.atm_id+', '+'%%'+object.latitude+'%%'+object.longitude))
+				res.append((str(object.id),str(object.name+', '+object.atm_id+', '+'%%'+object.latitude+'%%'+object.longitude)))
 			else:
 			   # //name for contact_id field                     
 				res.append((object.id,object.name+', '+object.atm_id))

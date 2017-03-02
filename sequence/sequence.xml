@@ -99,13 +99,13 @@
 			</record> -->
 
 			<!-- sequence no for schedule tasks-->
-			<record id="seq_schedule_tasks" model="ir.sequence.type"> 
+			<record id="seq_scheduling_tasks" model="ir.sequence.type"> 
 				<field name="name">Schedule Tasks</field> 
-				<field name="code">sched.tasks</field> 
+				<field name="code">schedule.tasks</field> 
 			</record> 
-			<record id="schedule_tasks" model="ir.sequence"> 
+			<record id="scheduling_tasks" model="ir.sequence"> 
 				<field name="name">Schedule Tasks</field> 
-				<field name="code">sched.tasks</field> 
+				<field name="code">schedule.tasks</field> 
 				<field name="prefix">SCHED TASK</field> 
 				<field name="padding">5</field> 
 			</record>

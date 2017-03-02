@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <!-- EDI related Email Templates menu -->
+        <record model="ir.actions.act_window" id="action_customer_mail_template">
+            <field name="name">Email Templates</field>
+            <field name="res_model">email.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="email_template.email_template_tree" />
+            <field name="search_view_id" ref="email_template.view_email_template_search"/>
+            <field name="context">{'search_default_model_id':'customer.alerts'}</field>
+            <field name="context" eval="{'search_default_model_id': ref('transtech.model_customer_alerts')}"/>
+        </record>
+
+
+
+        <record id="customer_mail_template" model="email.template">
+                <field name="name">Alerts</field>
+                <field name="email_from">info@transtech.com</field>
+                <field name="subject"> TransTech Portal - Error Alert</field>
+                <field name="model_id" ref="transtech.model_customer_alerts"/>
+                <field name="auto_delete" eval="True"/>
+                <field name="email_to"></field>
+                <field name="body_html">
+                <![CDATA[
+                      Dear ${object.customer.name}, <br/><br/>
+
+                          An error alert is recorded in TransTech portal. Details are as follows:<br/><br/>
+
+                          Alert ID: ${object.name_id} <br/>
+                          ATM: ${object.atm_id.name}, ${object.atm_id.atm_id} <br/>
+                          Priority: ${object.priority} <br/>
+                          Emirate: ${object.state_id.name} <br/>
+                          Subject: ${object.summary} <br/>
+                          Description: ${object.description} <br/><br/>
+                          Images :  <br/>
+                          <img src="data:image/png;base64,${object.image}" style="width: 150px;height: 80px;" /><br/>
+                          <img src="data:image/png;base64,${object.image_2}" style="width: 150px;height: 80px;" /><br/>
+                          <img src="data:image/png;base64,${object.image_3}" style="width: 150px;height: 80px;" /><br/><br/>
+
+                          Submitted By: ${object.submitted_by.name}          
+
+                ]]>
+                </field>
+        </record>
+
+</data>
+</openerp>
