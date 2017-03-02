@@ -10,7 +10,7 @@
 			<record id="tasks_inqueue" model="ir.sequence"> 
 				<field name="name">Tasks InQueue</field> 
 				<field name="code">tasks.queue</field> 
-				<field name="prefix">Task</field> 
+				<field name="prefix">TASK</field> 
 				<field name="padding">9</field> 
 			</record>
 
@@ -132,6 +132,19 @@
 				<field name="code">remark.cat</field> 
 				<field name="prefix"></field> 
 				<field name="padding">3</field> 
+			</record>
+
+
+			<!-- sequence no for res.users-->
+			<record id="res_users_id" model="ir.sequence.type"> 
+				<field name="name">Res Users</field> 
+				<field name="code">res.id</field> 
+			</record> 
+			<record id="res_user_cat" model="ir.sequence"> 
+				<field name="name">Res Users</field> 
+				<field name="code">res.id</field> 
+				<field name="prefix">USER</field> 
+				<field name="padding">4</field> 
 			</record>
 		</data>
 	</openerp>

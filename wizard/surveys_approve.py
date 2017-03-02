@@ -13,7 +13,7 @@ class surveys_approve(osv.TransientModel):
 		self.pool.get('survey.details').write(cr,uid,context['active_ids'],{'status':'approved'})
 		obj_list = self.pool.get('survey.details').browse(cr,uid,context['active_ids'])
 		for obj in obj_list:
-			self.pool.get('atm.surverys.management').write(cr, uid, obj.surv_task.id,{'status':'done'}, context)
+			self.pool.get('tasks.queue').write(cr, uid, obj.surv_task.id,{'status':'done'}, context)
 		return {'type': 'ir.actions.act_window_close'}
 
 surveys_approve()

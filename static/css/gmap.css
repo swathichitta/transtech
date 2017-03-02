@@ -1,9 +1,6 @@
-p#msg_empty {
-    display: none;
-    /* Rotate div */-ms-transform: rotate(90deg); /* IE 9 */-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */transform: rotate(90deg);
-}
 
-div#gmap {
+
+#gmap {
     display: none;
     width: 300%;
     height: 300px;
@@ -250,12 +247,11 @@ div#image-1:target, div#image-2:target, div#image-3:target { left: 200px; }
     /* I made a 50% opacity black tile background for this 
      div so it would seem more... modal-y*/
 
-    background: transparent url('http://asherman1986-001-site2.smarterasp.net/Images/SiteImages/bgTile_black25.png') repeat;
+    /*background: transparent url('http://asherman1986-001-site2.smarterasp.net/Images/SiteImages/bgTile_black25.png') repeat;*/
 
 }
 #Fullscreen img{
 height: 100%;
 display: block;
 margin: 0 auto;
-}
 }

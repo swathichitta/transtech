@@ -1,11 +1,11 @@
 # description about module 
 
 {
-    "name": "ATM Survey Management",
-    "author": "ehapi Technologies",
-    "version": "1.0",
-    'author': 'ehapi',
-    'description': """Transtech ATM Survey Management Module""", 
+	"name": "ATM Survey Management",
+	"author": "ehapi Technologies",
+	"version": "1.0",
+	'author': 'ehapi',
+	'description': """Transtech ATM Survey Management Module""", 
 	"category" : "Tools",
 	"depends" : ['base','mail'],
 	"demo_xml" : [], 
@@ -20,6 +20,7 @@
 				"wizard/atm_move_view.xml",
 				"wizard/surveys_approve_view.xml",
 
+				"views/custom_res_users.xml",
 				"views/template_view.xml",
 				"views/tasks_inqueue_view.xml",
 				"views/alerts_foru_view.xml",
@@ -37,9 +38,13 @@
 				"views/reason_code_setup_view.xml",
 				"views/manage_remark_category_view.xml",
 
+				"data/mail_data.xml",
+
 			],
 
+	'qweb': ['static/xml/base.xml',],
+
 	'auto_install': False,
-    'application': True, 
+	'application': True, 
 	"installable": True,
 }

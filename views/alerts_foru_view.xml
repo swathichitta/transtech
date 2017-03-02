@@ -2,8 +2,8 @@
 	<openerp>
 		<data>
 
-			<record model="ir.ui.view" id="alerts_dashboard_tree">
-				<field name="name">alerts.dashboard.tree</field>
+			<record model="ir.ui.view" id="internal_alerts_dashboard_tree">
+				<field name="name">alerts.foru.tree</field>
 				<field name="model">alerts.dashboard</field>
 				<field name="type">tree</field>
 				<field name="arch" type="xml">
@@ -14,62 +14,49 @@
 						<field name="priority"/>
 						<field name="summary"/>
 						<field name="status"/>
+						<field name="assign_to"/>
 						<field name="category"/>
 					</tree>
 				</field>
 			</record>
 	
-			<record model="ir.ui.view" id="alerts_dashboard_form">
-				<field name="name">alerts.dashboard.form</field>
-				<field name="model">alerts.dashboard</field>
-				<field name="type">form</field>
-				<field name="arch" type="xml">
-					<form string="Alert Details">
-						<header>
-						<button name="status_resolve" type="object" String="Resolve" class="oe_highlight"/>
-						<button name="status_close" type="object" String="Close"  class="oe_highlight"/>
-						<field name="status" widget="statusbar" statusbar_visible="assigned,resolved,closed"/> 
-						</header>
-						<sheet>
-							<group>
-								<group>
-									<field name="name" readonly="1"/>
-									<field name="customer" required="1"/>
-									<field name="created_by"/>
-									<field name="atm_id" required="1"/>
-									<field name="category" required="1"/>
-									<field name="priority" required="1"/>
-									<field name="country_id" />
-									<field name="state_id" />
-									<field name="assign_to"/>
-								</group>
-								<group string="Alert Categorization Details">
-									<field name="reason_id"/>
-									<field name="reason_disc"/>
-								</group>
-								<group string="Summary &amp; Description">
-									<field name="summary" />
-									<field name="description"/>
-								</group>
-							</group>
-						</sheet>
-					</form>
-				</field>
-			</record>
-
-			<record model='ir.actions.act_window' id='alerts_dashboard_action'>
-				<field name="name">Tasks in Queue</field>
-				<field name='res_model'>alerts.dashboard</field>
-				<field name="view_mode">tree,form</field>
-			</record>
-			 
-
-			<menuitem name="Alerts for You" parent='atm_dashboard' id='alerts_dashboard_left' sequence="2" action='alerts_dashboard_action' />
-		
-
-
 			
 
+			<record model='ir.actions.act_window' id='alerts_foru_action'>
+				<field name="name">Alerts for You</field>
+				<field name='res_model'>alerts.dashboard</field>
+ 				<field name="view_type">form</field>
+		    	<field name="limit">50</field>
+	            <field name="view_mode">tree,form</field>
+	         	<field name="domain">[]</field>
+	            <field name="view_id" ref="internal_alerts_dashboard_tree"/>
+	        </record>
+
+	        <record id="alerts_foru_dashboard" model="ir.ui.view">
+			    <field name="name">dashboard.alerts.form</field>
+			    <field name="model">board.board</field>
+			    <field name="arch" type="xml">
+			        <form string="My Board ATM">
+			            <board style="2-1">
+			                <column>
+			                    <action name="%(alerts_foru_action)d" string="Dashboard Alerts"/>
+			                </column>
+			            </board>
+			        </form>
+			    </field>
+			</record>
+
+	        <record id="dashboard_alertsforu_action" model="ir.actions.act_window">
+	            <field name="name">Alerts for You</field>
+	            <field name="res_model">board.board</field>
+	            <field name="view_type">form</field>
+			    <field name="limit">50</field>
+	            <field name="view_mode">form</field>
+	            <field name="usage">menu</field>
+	            <field name="view_id" ref="alerts_foru_dashboard"/>
+	        </record>
+			 
+			<menuitem parent='atm_dashboard' id='alerts_dashboard_left' sequence="2" action='dashboard_alertsforu_action' />
 		</data>
 	</openerp>
 		

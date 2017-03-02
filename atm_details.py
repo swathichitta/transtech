@@ -47,7 +47,7 @@ class ATM_details(osv.osv):
 	# 	mnth = self.CurrentMonth(cr,uid,context=None)
 
 	# 	for obj in self.browse(cr, uid, ids, context=context):
-	# 		survey_ids = self.pool.get('survey.info').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+	# 		survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 	# 		result[obj.id] = len(survey_ids)
 
 	# 	return result
@@ -57,17 +57,17 @@ class ATM_details(osv.osv):
 	# 	result = {}
 	# 	mnth = self.CurrentMonth(cr,uid,context=None)
 	# 	for obj in self.browse(cr, uid, ids, context=context):
-	# 		survey_ids = self.pool.get('survey.info').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+	# 		survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 
-	# 		sct_ids = self.pool.get('schedule.task').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
+	# 		sct_ids = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
 	# 		if sct_ids:
-	# 			sct_obj = self.pool.get('schedule.task').browse(cr,uid,sct_ids[0])
+	# 			sct_obj = self.pool.get('schedule.tasks').browse(cr,uid,sct_ids[0])
 
 	# 			if sct_obj.visit_type == 'monthly':
 	# 				total = 1
 	# 			else:
 	# 				total = int(sct_obj.visit_type)
-	# 			survey_ids = self.pool.get('survey.info').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+	# 			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 	# 			result[obj.id] = total - len(survey_ids)
 	# 			if result[obj.id] < 0:
 	# 				result[obj.id] = 0
@@ -82,11 +82,11 @@ class ATM_details(osv.osv):
 	# 	result = {}
 	# 	mnth = self.CurrentMonth(cr,uid,context=None)
 	# 	for obj in self.browse(cr, uid, ids, context=context):
-	# 		survey_ids = self.pool.get('survey.info').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+	# 		survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 
-	# 		sct_ids = self.pool.get('schedule.task').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
+	# 		sct_ids = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
 	# 		if sct_ids:
-	# 			sct_obj = self.pool.get('schedule.task').browse(cr,uid,sct_ids[0])
+	# 			sct_obj = self.pool.get('schedule.tasks').browse(cr,uid,sct_ids[0])
 
 	# 			if sct_obj.visit_type == 'monthly':
 	# 				result[obj.id] = 1
@@ -94,7 +94,7 @@ class ATM_details(osv.osv):
 	# 				result[obj.id] = sct_obj.visit_type
 	# 		else:
 
-	# 			survey_ids = self.pool.get('survey.info').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+	# 			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 	# 			result[obj.id] = len(survey_ids)
 
 	# 	return result
@@ -176,7 +176,6 @@ class ATM_details(osv.osv):
 	
 		}
 
-	# code to get default country name
 	def _default_country(self, cr, uid, context=None):
 		cid = self.pool.get('res.country').search(cr, uid, [('code', '=', 'AE')], context=context)
 		return cid[0]
@@ -238,6 +237,101 @@ class ATM_details(osv.osv):
 				res.append((object.id,object.name+', '+object.atm_id))
 		return res
 
+
+	def count_tasks(self,cr,uid,context=None):
+		vals = {}
+		if datetime.datetime.now().month == 1:
+				cur_month = 'jan'
+		if datetime.datetime.now().month == 2:
+				cur_month = 'feb'
+		if datetime.datetime.now().month == 3:
+				cur_month = 'mar'
+		if datetime.datetime.now().month == 4:
+				cur_month = 'apr'
+		if datetime.datetime.now().month == 5:
+				cur_month = 'may'
+		if datetime.datetime.now().month == 6:
+				cur_month = 'june'
+		if datetime.datetime.now().month == 7:
+				cur_month = 'jul'
+		if datetime.datetime.now().month == 8:
+				cur_month = 'aug'
+		if datetime.datetime.now().month == 9:
+				cur_month = 'sep'
+		if datetime.datetime.now().month == 10:
+				cur_month = 'oct'
+		if datetime.datetime.now().month == 11:
+				cur_month = 'nov'
+		if datetime.datetime.now().month == 12:
+				cur_month = 'dec'
+
+		tsk_ids = self.pool.get('tasks.queue').search(cr,uid,[('status','=','done'),('task_month','=','aug')])
+		t_obj = self.pool.get('tasks.queue').browse(cr,uid,tsk_ids)
+		atm_list = []
+		
+		for i in t_obj:
+			# if i.status=='done':
+			atm_list.append(i.atm.id)
+			tsk_ids1 = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',i.atm.id)])
+			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=','aug'),('atm_surv','=',i.atm.id),('status','=','approved')])
+			
+			if survey_ids:
+				vals.update({'no_tasks':len(survey_ids)})
+			else:
+				vals.update({'no_tasks':0})
+
+			if tsk_ids1:
+				sct_obj = self.pool.get('schedule.tasks').read(cr,uid,tsk_ids1[0],['visit_type'])
+
+				if sct_obj['visit_type'] == 'monthly':
+					sct_obj['visit_type'] = '1'
+				
+				if sct_obj['visit_type'] == 'daily':
+					sct_obj['visit_type'] = '30'
+
+				if sct_obj['visit_type'] == 'weekly':
+					sct_obj['visit_type'] = '4'
+				# print sct_obj
+				done = self.pool.get('tasks.queue').search(cr,uid,[('status','=','done'),('task_month','=','aug'),('atm','=',i.atm.id)])
+				vals.update({'total_visits':int(sct_obj['visit_type'])})
+				vals.update({'no_of_visits':vals['total_visits']-vals['no_tasks']})
+				if vals['no_of_visits'] < 0:
+						vals.update({'no_of_visits':0})
+				# print vals
+			else:
+				# done = self.pool.get('tasks.queue').search(cr,uid,[('status','=','done'),('task_month','=','jul'),('atm','=',i.atm.id)])
+				vals.update({'total_visits':len(survey_ids)})
+				vals.update({'no_of_visits':vals['total_visits']-vals['no_tasks']})
+				if vals['no_of_visits'] < 0:
+						vals.update({'no_of_visits':0})
+
+			self.pool.get('atm.info').write(cr,uid,i.atm.id,vals)
+		untouched_atms =  self.search(cr,uid,[('id','not in',atm_list)])
+		values = {}
+
+		if untouched_atms:
+			for j in untouched_atms:
+
+				tsk_ids1 = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',j)])
+				if tsk_ids1:
+					sct_obj = self.pool.get('schedule.tasks').read(cr,uid,tsk_ids1,['visit_type','atm'])
+					for i in sct_obj:
+						if i['visit_type'] == 'monthly':
+							i['visit_type'] = '1'
+						
+						if i['visit_type'] == 'daily':
+							i['visit_type'] = '30'
+
+						if i['visit_type'] == 'weekly':
+							i['visit_type'] = '4'
+						values.update({'total_visits':int(i['visit_type'])})
+				else:
+					values.update({'total_visits':0})
+				values.update({'no_tasks':0})
+				values.update({'no_of_visits':0})
+				self.pool.get('atm.info').write(cr,uid,j,values)
+		return True
+
 ATM_details()
 
 
@@ -254,58 +348,3 @@ class Atm_old(osv.osv):
 Atm_old()
 
 
-
-class Atm_survey_management(osv.osv):
-	_name="atm.surverys.management"
-	_columns={
-		'name':fields.char('Task ID', readonly=True),
-		'task_month':fields.selection([('jan','January'),
-									   ('feb', 'February'),
-									   ('mar', 'March'),
-									   ('apr', 'April'),
-									   ('may', 'May'),
-									   ('june','June'),
-									   ('jul', 'July'),
-									   ('aug', 'August'),
-									   ('sep', 'September'),
-									   ('oct', 'October'),
-									   ('nov', 'November'),
-									   ('dec', 'December'),], 'Month'),
-		'customer':fields.many2one('customer.info','Customer'),
-		'state':fields.many2one('res.country.state','State',domain="[('country_id','=',country)]"),
-		'atm':fields.many2one('atm.info','ATM',domain="[('customer','=',customer),('state_id','=',state)]"),
-		'country':fields.many2one('res.country','Country', domain="[('code','=','AE')]"),
-		'surveyor':fields.many2one('res.users','Surveyor', domain="[('name_tl','!=',False)]"),
-		'visit_time':fields.datetime('Visit Date And Time'),
-		'additional_info':fields.text('Additional instructions'),
-		'status': fields.selection([('assigned','Assigned'),
-									('pending', 'Pending'),
-									('cancel', 'Cancelled'),
-									('progress', 'Progress'),
-									('waitnig_approve','Waiting for Approval'),
-									('done', 'Done'),], 'Status'),
-		'bulk_insert':fields.boolean('Bulk Insert'),
-		'nos':fields.integer('Number of records for Bulk Insert '),
-		'remarks_id':fields.many2one('remarks.category', 'Remarks Category'),
-		'remarks':fields.text('Remarks'),
-		'act_visit_time':fields.datetime('Actual Date Time'),
-		'assigned_by':fields.many2one('res.users','Assigned By'),
-		'visit_type': fields.selection([('daily','Daily'),
-										('weekly', 'Weekly'),
-										('monthly', 'Monthly'),
-										('2', 'Twice'),
-										('3', '3 times'),
-										('4', '4 times'),
-										('5', '5 times'),
-										('6', '6 times'),
-										('7', '7 times'),
-										('8', '8 times'),
-										('9', '9 times'),
-										('10', '10 times'),
-										('12', '12 times'),
-										('13', '13 times'),
-										('16', '16 times'),], 'Visit Type'),
-		'next_visit':fields.datetime('Next Visit'),
-		'visit_shift':fields.selection([('day','Day'),
-										('night','Night')] ,'Visit Shift'),
-	}

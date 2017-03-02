@@ -1,9 +1,8 @@
-
 function map_loaded() {}
 
 var location_map_widget;
 
-openerp.transtech= function (instance)
+openerp.transtech = function (instance)
 {   
 
   instance.web.form.widgets.add('location_map', 'instance.transtech.Map');

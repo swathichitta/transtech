@@ -27,22 +27,16 @@
     <data noupdate="0">
         <record model="ir.rule" id="project_atm_manager_rule">
             <field name="name">Project: project manager: see all</field>
-            <field name="model_id" ref="model_atm_surverys_management"/>
+            <field name="model_id" ref="model_tasks_queue"/>
             <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
         </record>
 
        
-        <record model="ir.rule" id="atm_visibility_rule">
-            <field name="name">Surveyor: see only his tasks</field>
-            <field name="model_id" ref="model_atm_surverys_management"/>
-            <field name="domain_force">[('surveyor', '=', user.id),]</field>
-            <field name="groups" eval="[(4,ref('group_atm_user'))]"/>
-        </record>
-
+        
         <record model="ir.rule" id="project_manager_all_atm_tasks_rule">
             <field name="name">TeamLeader: see all Tasks</field>
-            <field name="model_id" ref="model_atm_surverys_management"/>
+            <field name="model_id" ref="model_tasks_queue"/>
             <field name="domain_force">[(1, '=', 1)]</field>
             <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
         </record>
@@ -54,10 +48,31 @@
             <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
         </record>
 
+        <record model="ir.rule" id="manager_alert_rule">
+            <field name="name">Manager: see all alerts</field>
+            <field name="model_id" ref="model_alerts_dashboard"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
+        </record>
+
+        <record model="ir.rule" id="manager_survey_info_rule">
+            <field name="name">Manager: see all Survey Details</field>
+            <field name="model_id" ref="model_survey_details"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
+        </record>
+
         <record model="ir.rule" id="surveyor_alert_rule">
             <field name="name">Surveyor: see his alerts</field>
             <field name="model_id" ref="model_alerts_dashboard"/>
             <field name="domain_force">[('assign_to', '=', user.id)]</field>
+            <field name="groups" eval="[(4,ref('group_atm_user'))]"/>
+        </record>
+        
+        <record model="ir.rule" id="atm_visibility_rule">
+            <field name="name">Surveyor: see only his tasks</field>
+            <field name="model_id" ref="model_tasks_queue"/>
+            <field name="domain_force">[('surveyor', '=', user.id),]</field>
             <field name="groups" eval="[(4,ref('group_atm_user'))]"/>
         </record>
 
@@ -68,9 +83,16 @@
             <field name="groups" eval="[(4,ref('group_atm_user'))]"/>
         </record>
 
+        <record id="portal_atm_surveyor_atm_rule" model="ir.rule">
+            <field name="name">Surveyor: read access his docs3</field>
+            <field name="model_id" ref="model_atm_info"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_atm_user'))]"/>
+        </record>
+
         <record id="portal_atm_customer_rule" model="ir.rule">
             <field name="name">Customer: read access his docs</field>
-            <field name="model_id" ref="model_atm_surverys_management"/>
+            <field name="model_id" ref="model_tasks_queue"/>
             <field name="domain_force">[('customer.name', '=', user.name)]</field>
             <field name="groups" eval="[(4, ref('group_atm_customer'))]"/>
         </record>
@@ -104,26 +126,6 @@
             <field name="groups" eval="[(4, ref('group_atm_customer'))]"/>
         </record>
 
-        <record model="ir.rule" id="manager_alert_rule">
-            <field name="name">Manager: see all alerts</field>
-            <field name="model_id" ref="model_alerts_dashboard"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
-        </record>
-
-        <record id="portal_atm_surveyor_atm_rule" model="ir.rule">
-            <field name="name">Surveyor: read access his docs3</field>
-            <field name="model_id" ref="model_atm_info"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4, ref('group_atm_user'))]"/>
-        </record>
-
-        <record model="ir.rule" id="manager_survey_info_rule">
-            <field name="name">Manager: see all Survey Details</field>
-            <field name="model_id" ref="model_survey_details"/>
-            <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4,ref('group_atm_manager'))]"/>
-        </record>
 
 
 </data>

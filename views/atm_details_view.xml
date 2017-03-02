@@ -61,7 +61,7 @@
 										<group>
 											<field name="longitude"/>
 											<field name="latitude"/>
-											 <field name="id" widget="location_map" nolabel="1"></field>
+											 <!-- <field name="id" widget="location_map" nolabel="1"></field> -->
 										</group>
 									</td>
 											<td style="padding-left: 15px; padding-top: 15px" width="100%%">

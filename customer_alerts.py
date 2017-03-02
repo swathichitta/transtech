@@ -10,7 +10,7 @@ class Customer_alerts(osv.osv):
 	_inherit = 'alerts.dashboard'
 
 	_columns = {
-
+	'name_id':fields.char('ID'),
 	'submitted_by':fields.many2one('res.users','Submitted By'),
 	'image':fields.binary('Image'),
 	'image_2':fields.binary('Image'),
@@ -18,11 +18,12 @@ class Customer_alerts(osv.osv):
 
 	
 	}
-
 	
 	_defaults = {
 		'submitted_by': lambda obj, cr, uid, context: uid,
 	}
 	
-
+	def send_attachments(self,cr,uid,ids,context=None):
+		# sending attachments through mail
+		return True
 Customer_alerts()

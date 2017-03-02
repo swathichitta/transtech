@@ -29,7 +29,7 @@ class Survey_Details(osv.osv):
 
 	_columns = {
 		"name": fields.char("Survey id"),
-		"surv_task": fields.many2one("atm.surverys.management", 'ATM Report Task ID'),
+		"surv_task": fields.many2one("tasks.queue", 'ATM Report Task ID'),
 		'state': fields.many2one('res.country.state', 'State'),
 		'month': fields.selection([('jan', 'January'),
 									('feb', 'February'),
@@ -243,7 +243,7 @@ class Survey_Details(osv.osv):
 		'cur_longitude': fields.char('Current Longitude'),
 		'cur_latitude': fields.char('Current Latitude'),
 		'nxt_survey_distance': fields.integer('Next Survey Distance'),
-		'nxt_taskid': fields.many2one('atm.surverys.management', 'Next Task ID'),
+		'nxt_taskid': fields.many2one('tasks.queue', 'Next Task ID'),
 		'visits_done': fields.integer('Visits Done'),
 		'visits_left': fields.integer('Visits Left'),
 		'total_visits': fields.integer('Total Visits'),
@@ -299,12 +299,10 @@ class Survey_Details(osv.osv):
 	def onchange_taskid(self, cr, uid, ids, surv_task, context=None):
 		res = {'value': {}}
 		if surv_task:
-			part = self.pool.get('atm.surverys.management').browse(cr, uid, surv_task, context)
-			# print part.atm.id
+			part = self.pool.get('tasks.queue').browse(cr, uid, surv_task, context)
 			res['value'].update({'month': part.task_month})
 			res['value'].update({'atm_surv': part.atm.id})
 			res['value'].update({'surveyor_surv': part.surveyor.id})
-
 			res['value'].update({'customer_surv': part.customer.id})
 			res['value'].update({'visit_tm': part.visit_time})
 			res['value'].update({'state': part.state.id})

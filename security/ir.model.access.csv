@@ -1,10 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_atm_surverys_management_cus,atm.surverys.management,model_atm_surverys_management,group_atm_customer,1,0,0,0
+access_atm_surverys_management_cus,tasks.queue,model_tasks_queue,group_atm_customer,1,0,0,0
 access_customer_info,customer.info,model_customer_info,group_atm_customer,1,0,0,0
-access_atm_surverys_management,atm.surverys.management,model_atm_surverys_management,group_atm_user,1,1,0,0
+access_atm_surverys_management,tasks.queue,model_tasks_queue,group_atm_user,1,1,0,0
 access_alert_info_cus,alerts.dashboard,model_alerts_dashboard,group_atm_customer,1,0,1,0
 access_atm_info_cus,atm.info,model_atm_info,group_atm_customer,1,1,0,0
-access_project_project_manager,atm.surverys.management,model_atm_surverys_management,group_atm_manager,1,1,1,1
+access_project_project_manager,tasks.queue,model_tasks_queue,group_atm_manager,1,1,1,1
 access_atm_manager,atm.info,model_atm_info,group_atm_manager,1,1,1,1
 access_alert_info,alerts.dashboard,model_alerts_dashboard,group_atm_manager,1,1,1,1
 access_customer_info_manager,customer.info,model_customer_info,group_atm_manager,1,1,1,1

@@ -9,7 +9,7 @@ class Customer_Details(osv.osv):
 	 		
 	def _show_tasks(self, cr, uid, ids, name, args, context=None):
 		res = {}
-		c_ids = self.pool.get('atm.surverys.management').search(cr,uid,[('customer','=',ids[0])])
+		c_ids = self.pool.get('tasks.queue').search(cr,uid,[('customer','=',ids[0])])
 		for t_id in self.browse(cr,uid,ids):
 			res[t_id.id] = c_ids
 		return res
@@ -33,14 +33,14 @@ class Customer_Details(osv.osv):
 		'account_manager':fields.many2one('res.users','Account Manager'),
 		'other_1':fields.many2one('res.users','Other1'),
 		'other_2':fields.many2one('res.users','Other2'),
-		'task_ids': fields.function(_show_tasks, relation='atm.surverys.management', type="many2many", string='My Tasks'),
+		'task_ids': fields.function(_show_tasks, relation='tasks.queue', type="many2many", string='My Tasks'),
 		'sla_start':fields.datetime('SLA Start Date'),
 		'sla_end':fields.datetime('SLA End Date'),
 		'is_customer':fields.boolean('Is Customer'),
 	}
 
 	def create(self, cr, uid, vals, context=None):
-		vals['customer_code'] = self.pool.get('ir.sequence').get(cr, uid, 'customer.info') or '/'
+		vals['customer_code'] = self.pool.get('ir.sequence').get(cr, uid, 'customer.info')
 		return super(Customer_Details, self).create(cr, uid, vals, context=context)
 
 	# code to get default country name
@@ -53,7 +53,7 @@ class Customer_Details(osv.osv):
 		'active':1,
 	}
   
-
+# portal access button method
 	def send_invitation(self,cr,uid,ids,context=None):
 		cust_obj = self.browse(cr,uid,ids,context=None)[0]
 		if not cust_obj.contact_email:

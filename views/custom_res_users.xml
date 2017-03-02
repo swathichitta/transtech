@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+	<openerp>
+		<data>
+
+			<record model="ir.ui.view" id="custom_res_users_form">
+				<field name="name">custom.res.users.form</field>
+				<field name="model">res.users</field>
+				<field name="type">form</field>
+				<field name="inherit_id" ref="base.view_users_form"/>
+				<field name="arch" type="xml">
+					<xpath expr="//form[@string='Users']" position="inside">
+						<field name="status" widget="statusbar" statusbar_visible="never_connected,activated,"/>
+					</xpath>
+					
+					<xpath expr="//form/sheet/field[@name='image']" position="before">
+						<h2><field name="tuser_id" readonly="1"/></h2>
+					</xpath>
+
+					<xpath expr="//form/sheet/div/label[@string='Email Address']" position="replace"/>
+					<xpath expr="//field[@name='login']" position="replace">
+						<h4><label for="login" string="Login"/></h4>
+						<h1><field name='login' style="width:50%"/> </h1>
+						<h4><label for="password" string="Password"/></h4>
+						<h1><field name='password' required="1" password="True" style="width:50%"/> </h1>
+					</xpath>
+
+					<xpath expr="//form/sheet/notebook/page[@string='Preferences']" position="replace"/>
+
+					<xpath expr="//form/sheet/notebook/page[@string='Access Rights']" position="before">
+						<page string="Preferences">
+							<group>
+								<field name="lang"  style="width:50%"/>
+								<field name="tz"  style="width:50%"/>
+								<field name="email"/>
+								<field name="alias_id" />
+								<field name="signature"/>
+							</group>
+						</page>
+					</xpath>
+					<xpath expr="//field[@name='partner_id']" position="replace"/>
+					<xpath expr="//field[@name='active']" position="replace">
+						<group>
+							<field name="company_id"/>
+							<field name="teamleader" string="Is Team Leader??" />
+							<field name="name_tl" attrs="{'invisible': [('teamleader', '=',True)]}"/>
+							<field name="contact_num"/>
+							<field name="joining_date"/>
+						</group>
+						<group>
+							<field name="active" />
+							<field name="survey_limit" />
+							<field name="customer_ids" widget="many2many_tags"/>
+							<field name="Comments" />
+						</group>
+					</xpath>
+
+				</field>
+			</record>
+			
+			<record model="ir.ui.view" id="custom_res_users_tree">
+				<field name="name">custom.res.users.tree</field>
+				<field name="model">res.users</field>
+				<field name="type">tree</field>
+				<field name="inherit_id" ref="base.view_users_tree"/>
+				<field name="arch" type="xml">
+
+					<xpath expr="//field[@name='lang']" position="after">
+						<field name='role'/> 
+						<field name="contact_num"/>
+						<field name="joining_date"/>
+					</xpath>
+					
+					<xpath expr="//field[@name='login_date']" position="replace">
+						<field name="login_date" string="Date"/>
+					</xpath>
+				</field>
+			</record>
+		</data>
+	</openerp>
