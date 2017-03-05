@@ -26,12 +26,13 @@
 				"report/survey2.xml",
 				"report/survey2_template.xml",
 
-				"views/customer_alerts_view.xml",
 				"views/custom_res_users.xml",
 				"views/template_view.xml",
 				"views/tasks_inqueue_view.xml",
 				"views/alerts_foru_view.xml",
 				"views/tasks_status_view.xml",
+				"views/customer_alerts_view.xml",
+
 				"views/customer_details_view.xml",
 				"views/atm_details_view.xml",
 				"views/site_inspection_view.xml",

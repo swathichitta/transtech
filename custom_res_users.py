@@ -17,8 +17,7 @@ class  Custom_res_users(osv.osv):
 	_columns ={
 		'teamleader':fields.boolean('Is Team Leader??'),
 		'name_tl':fields.many2one('res.users','Team Leader', domain="[('role','!=','Customer'),('role','!=','Surveyor')]"),
-		'password': fields.char('Password',
-				help="Keep empty if you don't want the user to be able to connect on the system."),
+		# 'password': fields.char('Password',	help="Keep empty if you don't want the user to be able to connect on the system."),
 		'tuser_id':fields.char('User ID' ),
 		'contact_num':fields.char('Contact Number'),
 		'joining_date':fields.date('Joining Date'),

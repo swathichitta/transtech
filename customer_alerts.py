@@ -85,39 +85,61 @@ class Customer_alerts(osv.osv):
 		if not customer_id.contact_email:
 			raise osv.except_osv(_('No Email Provided for this customer'),_("Please give a Valid email address !") )
 			return False
-		mail_ids = self.pool.get('ir.mail_server').search(cr,uid,[('active','=','True')])
-		mail_obj = self.pool.get('ir.mail_server').browse(cr,uid,mail_ids)[0]
-		username = mail_obj.smtp_user
-		pwd = 'd2dddaf6-caea-4d61-90e0-90aa58d88b98'
-		host = mail_obj.smtp_host
-		port = mail_obj.smtp_port
-		fromaddr = username
-		server = smtplib.SMTP(host+':'+'2525')
-		server.ehlo()
-		server.starttls()
-		server.ehlo()
-		server.login(username, pwd)
-		SMTP
+		# mail_ids = self.pool.get('ir.mail_server').search(cr,uid,[('active','=','True')])
+		# mail_obj = self.pool.get('ir.mail_server').browse(cr,uid,mail_ids)[0]
+		# username = mail_obj.smtp_user
+		# pwd = 'd2dddaf6-caea-4d61-90e0-90aa58d88b98'
+		# host = mail_obj.smtp_host
+		# port = mail_obj.smtp_port
+		# fromaddr = username
+		# server = smtplib.SMTP(host+':'+'2525')
+		# server.ehlo()
+		# server.starttls()
+		# server.ehlo()
+		# server.login(username, pwd)
+		# SMTP
 		msg = MIMEMultipart()
 		TO = customer_id.contact_email
 		msg['To'] = TO
 		FROM = 'info@transtech.ae'
 		msg['From'] = FROM
-		msg['Subject'] = 'email subject'
+		# msg['Subject'] = 'email subject'
 		send = smtplib.SMTP('smtp.elasticemail.com', 2525)
 		send.starttls()
 		send.login('rethish.kumar@transtech.ae', 'd2dddaf6-caea-4d61-90e0-90aa58d88b98')
 		
-		msg['From'] = fromaddr
+		# msg['From'] = fromaddr
 		msg['Subject'] = 'Regarding Alert in TransTech Portal'
 		toaddr = customer_id.contact_email
 		msg['To'] = toaddr
-		text = ('<p><h3>Dear %s,</h3></p><p><b>Alert Category </b> : %s</p><p><b>Priority </b>: %s</p><p><b>ATM </b>: %s,%s</p>')%(customer_id.name,alert_obj.category,alert_obj.priority,atm_name,affectedATM.atm_id)
-		text = ('<p><h2>Dear %s,</h2></p><p><b>Alert Category</b>: %s</p><p><b>Priority</b>: %s</p><p><b>ATM Location</b>: %s</p><p><b>ATM ID</b>: %s</p><p><b>Subject</b>: %s</p>\n <p> %s</p>\n Thanks')%(customer_id.name,str(alert_obj.category).title(),str(alert_obj.priority).title(),affectedATM.name,affectedATM.atm_id,alert_obj.summary,alert_obj.description)
+		text = ('<p><h3>Dear %s,</h3></p>\
+				<p><b>Alert Category </b> : %s</p>\
+				<p><b>Priority </b>: %s</p>\
+				<p><b>ATM </b>: %s,%s</p>')\
+			%(customer_id.name,
+					alert_obj.category,
+					alert_obj.priority,
+					atm_name,
+					affectedATM.atm_id)
+		text = ('<p><h2>Dear %s,</h2></p>\
+				<p><b>Alert Category</b>: %s</p>\
+				<p><b>Priority</b>: %s</p>\
+				<p><b>ATM Location</b>: %s</p>\
+				<p><b>ATM ID</b>: %s</p>\
+				<p><b>Subject</b>: %s</p>\
+				\n <p> %s</p>\n Thanks')
+
+			%(customer_id.name,
+				str(alert_obj.category).title(),
+				str(alert_obj.priority).title(),
+				affectedATM.name,
+				affectedATM.atm_id,
+				alert_obj.summary,
+				alert_obj.description)
 		body = MIMEText(text, _subtype='html')
 		msg.attach(body)
-		res = server.sendmail(fromaddr, toaddr, msg.as_string())
-		server.quit()
+		# res = server.sendmail(fromaddr, toaddr, msg.as_string())
+		# server.quit()
 		send.sendmail(FROM, TO, msg.as_string())
 		send.quit()
 		return True
@@ -134,33 +156,50 @@ class Customer_alerts(osv.osv):
 			raise osv.except_osv(_('No Email Provided for this Team Leader'),_("Please give a Valid email address !") )
 			return False
 		tname= user_ids.name
-		mail_ids = self.pool.get('ir.mail_server').search(cr,uid,[('active','=','True')])
-		mail_obj = self.pool.get('ir.mail_server').browse(cr,uid,mail_ids)[0]
-		username = mail_obj.smtp_user
-		pwd = mail_obj.smtp_pass
-		host = mail_obj.smtp_host
-		port = mail_obj.smtp_port
-		fromaddr = username
-		server = smtplib.SMTP(host+':'+'2525')
-		server.ehlo()
-		server.starttls()
-		server.ehlo()
-		server.login(username, pwd)
+		# mail_ids = self.pool.get('ir.mail_server').search(cr,uid,[('active','=','True')])
+		# mail_obj = self.pool.get('ir.mail_server').browse(cr,uid,mail_ids)[0]
+		# username = mail_obj.smtp_user
+		# pwd = mail_obj.smtp_pass
+		# host = mail_obj.smtp_host
+		# port = mail_obj.smtp_port
+		# fromaddr = username
+		# server = smtplib.SMTP(host+':'+'2525')
+		# server.ehlo()
+		# server.starttls()
+		# server.ehlo()
+		# server.login(username, pwd)
 		send = smtplib.SMTP('smtp.elasticemail.com', 2525)
 		send.starttls()
 		send.login('rethish.kumar@transtech.ae', 'd2dddaf6-caea-4d61-90e0-90aa58d88b98')
 		msg = MIMEMultipart()
 		FROM = 'info@transtech.ae'
 		msg['From'] = FROM
-		msg['From'] = 'info@transtech.ae'
+		# msg['From'] = 'info@transtech.ae'
 		msg['Subject'] = 'New Customer Alert in Transtech Portal'
 		TO = temail_id
 		msg['To'] = TO
-		text = ('<p><h2>Hello %s,</h2> One Customer Alert has been recorded in Transtech Portal</p><p><b>Details of generated alert is given below:</b></p><p><b>Genrated By </b>: %s</p><p><b>Alert ID</b> :  %s</p><p><b>Alert Category </b> : %s</p><p><b>Priority </b>: %s</p><p><b>ATM </b>: %s,%s</p><p><b>Summary </b>: %s</p><p><b>Description </b>: %s</p>')%(tname,customer_id.name,alert_obj.name,alert_obj.category,alert_obj.priority,atm_name,affectedATM.atm_id,alert_obj.summary,alert_obj.description)
+		text = ('<p><h2>Hello %s,</h2> One Customer Alert has been recorded in Transtech Portal</p>\
+			<p><b>Details of generated alert is given below:</b>\
+			</p><p><b>Genrated By </b>: %s</p>\
+			<p><b>Alert ID</b> :  %s</p>\
+			<p><b>Alert Category </b> : %s</p>\
+			<p><b>Priority </b>: %s</p>\
+			<p><b>ATM </b>: %s,%s</p>\
+			<p><b>Summary </b>: %s</p>\
+			<p><b>Description </b>: %s</p>')\
+			%(tname,
+				customer_id.name,
+				alert_obj.name,
+				alert_obj.category,
+				alert_obj.priority,
+				atm_name,
+				affectedATM.atm_id,
+				alert_obj.summary,
+				alert_obj.description)
 		body = MIMEText(text, _subtype='html')
 		msg.attach(body)
-		res = server.sendmail(fromaddr, toaddr, msg.as_string())
-		server.quit()
+		# res = server.sendmail(fromaddr, toaddr, msg.as_string())
+		# server.quit()
 		send.sendmail(FROM, TO, msg.as_string())
 		send.quit()
 		return True
