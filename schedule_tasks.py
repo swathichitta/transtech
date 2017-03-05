@@ -119,7 +119,6 @@ class Schedule_tasks(osv.osv):
 			visit_date = today
 			vals['next_exec'] = visit_date+ relativedelta(days=2.5)
 
-
 		if vals['visit_type'] == '13':
 			visit_date = today
 			vals['next_exec'] = visit_date+ relativedelta(days=2.30)
@@ -130,6 +129,8 @@ class Schedule_tasks(osv.osv):
 
 		if vals['next_exec'].weekday() == 4:
 			vals['next_exec'] =  vals['next_exec'] - relativedelta(days=1)
+
+		vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sched.tasks')
 
 		return super(Schedule_tasks, self).create(cr, uid, vals, context=context)
 

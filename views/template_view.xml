@@ -9,7 +9,6 @@
  
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh2fW4YfEesHtvzykhLBvQbSu8QtlxLE4&amp;callback=initMap"></script>
 		<!--These links will be called when loading your Odoo -->
-                <!-- <link rel="stylesheet" href="/atm/static/src/css/gmap.css"/> -->
 
 
             </xpath>

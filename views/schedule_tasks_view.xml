@@ -7,7 +7,7 @@
 				<field name="model">schedule.tasks</field>
 				<field name="type">tree</field>
 				<field name="arch" type="xml">
-					<tree  >
+					<tree string="Schedule Tasks tree" colors="red:status=='cancel'">
 						<field name="name" />
 							<field name="customer"/>
 							<field name="atm"/>
@@ -27,7 +27,7 @@
 				<field name="arch" type="xml">
 					<form string="Scheduled Tasks">
 						<header>
-							<button name="status_cancel" type="object" String="Cancel" attrs="{'invisible': [('status','in',('cancel'))]}"/>
+							<button name="status_cancel" type="object" String="Cancel" groups="transtech.group_atm_manager, transtech.group_atm_user" attrs="{'invisible': [('status','in',('cancel'))]}"/>
 							<field name="status" widget="statusbar" statusbar_visible="cancel"/> 
 
 						</header>
@@ -58,13 +58,35 @@
 				</field>
 			</record>
 
+			<record model="ir.ui.view" id="view_scheduled_task_filter">
+	            <field name="name">view_schedule_task_filter</field>
+	            <field name="model">schedule.tasks</field>
+	            <field name="arch" type="xml">
+	                <search string="schedule task search">
+	                	<field name="name" filter_domain="['|','|',('name','ilike',self),('atm','ilike',self),('customer','ilike',self)]" string="TASK"/>
+						<separator/>
+	                    <group expand="0" string="Group By...">
+	                        <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'customer'}"/>
+	                        <filter string="Surveyor Name" icon="terp-folder-green" domain="[]" context="{'group_by':'surveyor'}"/>
+							<filter string="Location"  domain="[]" context="{'group_by':'state'}"/>
+							<filter string="Status"  domain="[]" context="{'group_by':'status'}"/>
+							<filter string="ATM"  domain="[]" context="{'group_by':'atm'}"/>
+						</group>
+	            	</search>
+            	</field>
+            </record>
 			<record model='ir.actions.act_window' id='schedule_tasks_action'>
 				<field name="name">Schedule Tasks</field>
 				<field name='res_model'>schedule.tasks</field>
 				<field name="view_mode">tree,form</field>
+				<field name="help" type="html">
+      				<p class="oe_view_nocontent_create">
+        				Click to Schedule tasks..
+      				</p>
+       			</field>
 			</record>
 			 
-			<menuitem name="Tasks Management" id="tasks_management_left" parent="atm_survey_management" sequence="4"/>
+			<menuitem name="Tasks Management" id="tasks_management_left" parent="atm_survey_management" sequence="4"  groups="transtech.group_atm_manager,transtech.group_atm_user"/>
 			<menuitem name="Schedule Tasks" parent='tasks_management_left' id='schedule_tasks_id' sequence="2" action='schedule_tasks_action' />
 		</data>
 	</openerp>

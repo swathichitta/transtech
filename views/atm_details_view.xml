@@ -14,9 +14,9 @@
 						<field name="customer"/>
 						<field name="atm_type"/>
 						<field name="state_id"/>
-						<!-- <field name="visits_done" sum="Total"/> -->
-						<!-- <field name="visits_left" sum="Total"/> -->
-						<!-- <field name="visits_total" sum="Total"/> -->
+						<field name="visits_done" sum="Total"/>
+						<field name="visits_left" sum="Total"/>
+						<field name="visits_total" sum="Total"/>
 					</tree>
 				</field>
 			</record>
@@ -147,10 +147,34 @@
 				</field>
 			</record>
 
+			<record model="ir.ui.view" id="view_atm_info_filter">
+	            <field name="name">view_atm_filter</field>
+	            <field name="model">atm.info</field>
+	            <field name="arch" type="xml">
+		            <search string="atm info search">
+						<field name="name" filter_domain="['|','|',('name','ilike',self),('atm_id','ilike',self),('customer','ilike',self)]" string="ATM Info"/>
+						<filter string="ATM Only" icon="terp-check" domain="[('atm_type','=','atm_only')]"/>
+						<filter string="ATM and Cash Deposit" icon="terp-check" domain="[('atm_type','=','atm_cash_deposit')]"/>
+						<filter string="Drive Through" icon="terp-check" domain="[('atm_type','=','drive_through')]"/>
+						<separator/>
+			                <group expand="0" string="Group By...">
+		                        <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'customer'}"/>
+		                       <filter string="ATM Type" icon="terp-folder-green" domain="[]" context="{'group_by':'atm_type'}"/>
+		                        <filter string="Branch" icon="terp-folder-green" domain="[]" context="{'group_by':'name'}"/>
+								<filter string="State"  domain="[]" context="{'group_by':'state_id'}"/>
+							</group>
+		            </search>
+	            </field>
+            </record>
 			<record model='ir.actions.act_window' id='atm_details_action'>
 				<field name="name">ATM details</field>
 				<field name='res_model'>atm.info</field>
 				<field name="view_mode">tree,form</field>
+				<field name="help" type="html">
+              		<p class="oe_view_nocontent_create">
+                	click to add new ATM details......
+              		</p>
+               	</field>
 			</record>
 			 
 			

@@ -21,8 +21,8 @@ access_remarks_category_customer,remarks.category,model_remarks_category,group_a
 access_customer_info_user,customer.info,model_customer_info,group_atm_user,1,0,0,0
 access_atm_info,atm.info,model_atm_info,group_atm_user,1,1,1,0
 access_res_users_manager,res.users,base.model_res_users,group_atm_manager,1,1,1,1
-access_internal_alerts,internal.alerts,model_internal_alerts,group_atm_manager,1,1,1,1
-access_internal_alerts_user,internal.alerts,model_internal_alerts,group_atm_user,1,1,1,1
+access_internal_alerts,alerts.dashboard,model_alerts_dashboard,group_atm_manager,1,1,1,1
+access_internal_alerts_user,alerts.dashboard,model_alerts_dashboard,group_atm_user,1,1,1,1
 access_atm_move_customer,atm.move,model_atm_move,group_atm_customer,1,1,1,1
 access_survey_info_manager,survey.details,model_survey_details,group_atm_manager,1,1,1,1
 access_survey_info_surveyor,survey.details,model_survey_details,group_atm_user,1,1,1,0

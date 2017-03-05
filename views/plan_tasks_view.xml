@@ -9,30 +9,30 @@
 				<field name="arch" type="xml">
 					<form string="ATM Surverys form">	
 						<header>
-							<button name="status_done" type="object" String="Done"  attrs="{'invisible': [('status','in',('done','cancel'))]}"/>
-							<button name="status_cancel" type="object" String="Cancel" attrs="{'invisible': [('status','in',('done','cancel'))]}"/>
+							<button name="status_done" type="object" String="Done" groups="transtech.group_atm_manager, transtech.group_atm_user" attrs="{'invisible': [('status','in',('done','cancel'))]}"/> 
+							<button name="status_cancel" type="object" String="Cancel" groups="transtech.group_atm_manager, transtech.group_atm_user" attrs="{'invisible': [('status','in',('done','cancel'))]}"/>
 							<field name="status" widget="statusbar" statusbar_visible="assigned,pending,cancel,progress,waitnig_approve,done"/> 
 						</header>
 						<sheet>
 							<group>
 								<group>
-									<field name="name" readonly="1"/>
-									<field name="task_month" />
-									<field name="customer" required="1"/>
-									<field name="state" required="1"/>
-									<field name="atm" />
-									<field name='visit_shift' required="1"/>
-									<field name="country" required="1"/>
-									<field name="surveyor" required="1"/>
-									<field name="visit_time" required="1"/>
-									<field name="additional_info"/>
-									<field name="bulk_insert" />
-									<field name="visit_type" />
+									<field name="name" readonly="1" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="task_month" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="customer" required="1" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="state" required="1" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="atm" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name='visit_shift' required="1" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="country" required="1" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="surveyor" required="1" groups="transtech.group_atm_manager, transtech.group_atm_user" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="visit_time" required="1" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="additional_info" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="bulk_insert" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="visit_type" attrs="{'readonly':[('status','!=','assigned')]}" />
 								</group>
 								<group string="Visit Details" >
-									<field name="remarks_id" />
-									<field name="remarks" />
-									<field name="act_visit_time"/>
+									<field name="remarks_id" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="remarks" attrs="{'readonly':[('status','!=','assigned')]}" />
+									<field name="act_visit_time" attrs="{'readonly':[('status','!=','assigned')]}" />
 								</group>
 							</group>
 						</sheet>
@@ -50,11 +50,38 @@
 						<field name="task_month" />
 						<field name="country"/>
 						<field name="state" />
-						<field name="surveyor"/>
+						<field name="surveyor" groups="transtech.group_atm_manager, transtech.group_atm_user"/>
 						<field name="visit_time"/>
 						<field name="additional_info"/>
 						<field name="status"/>
 					</tree>
+				</field>
+			</record>
+
+			<record model="ir.ui.view" id="view_atm_surverys_filter">
+				<field name="name">view_atm_surverys_filter</field>
+				<field name="model">tasks.queue</field>
+				<field name="arch" type="xml">
+					<search string="atm surverys search">
+
+						<field name="name" filter_domain="['|','|',('name','ilike',self),('atm','ilike',self),('customer','ilike',self)]" string="TASK"/>
+
+					   <filter icon="terp-go-today" string="Today" name="today" domain="[('visit_time','&gt;=',current_date),('visit_time','&lt;=',current_date)]" />
+						<separator/>
+						<filter icon="terp-check" string="Assigned"  domain="[('status','=','assigned')]"/>
+						<filter icon="terp-check" string="Progress"  domain="[('status','=','progress')]"/>
+						<filter icon="terp-check" string="Pending"  domain="[('status','=','pending')]"/>
+						<filter icon="terp-check" string="Waiting Approval"  domain="[('status','=','waitnig_approve')]"/>
+						<filter icon="terp-check" string="Done"  domain="[('status','=','done')]"/>
+									
+						 <group expand="0" string="Group By...">
+							<filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'customer'}"/>
+							<filter string="Surveyor Name" icon="terp-folder-green" domain="[]" context="{'group_by':'surveyor'}" groups="transtech.group_atm_manager, transtech.group_atm_user"/>
+							<filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'visit_time'}"/>
+							<filter string="Location"  domain="[]" context="{'group_by':'state'}"/>
+							<filter string="Status"  domain="[]" context="{'group_by':'status'}"/>
+						</group>
+					</search>
 				</field>
 			</record>
 
@@ -63,6 +90,11 @@
 				<field name="name">View &amp; Plan Tasks</field>
 				<field name='res_model'>tasks.queue</field>
 				<field name="view_mode">tree,form</field>
+				 <field name="help" type="html">
+					<p class="oe_view_nocontent_create">
+						click to create task and plan..
+					</p>
+				</field>
 			</record>
 			 
 			<menuitem parent='tasks_management_left' id='view_plan_tasks' sequence="1" action='plan_tasks_action' />

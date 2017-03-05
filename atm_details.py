@@ -41,63 +41,63 @@ class ATM_details(osv.osv):
 
 		return month
 
-	# def __count_visits1(self, cr, uid, ids, name, arg, context=None):
+	def __count_visits1(self, cr, uid, ids, name, arg, context=None):
 
-	# 	result = {}
-	# 	mnth = self.CurrentMonth(cr,uid,context=None)
+		result = {}
+		mnth = self.CurrentMonth(cr,uid,context=None)
 
-	# 	for obj in self.browse(cr, uid, ids, context=context):
-	# 		survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
-	# 		result[obj.id] = len(survey_ids)
+		for obj in self.browse(cr, uid, ids, context=context):
+			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+			result[obj.id] = len(survey_ids)
 
-	# 	return result
+		return result
 
-	# def __count_visits2(self, cr, uid, ids, name, arg, context=None):
+	def __count_visits2(self, cr, uid, ids, name, arg, context=None):
 
-	# 	result = {}
-	# 	mnth = self.CurrentMonth(cr,uid,context=None)
-	# 	for obj in self.browse(cr, uid, ids, context=context):
-	# 		survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+		result = {}
+		mnth = self.CurrentMonth(cr,uid,context=None)
+		for obj in self.browse(cr, uid, ids, context=context):
+			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 
-	# 		sct_ids = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
-	# 		if sct_ids:
-	# 			sct_obj = self.pool.get('schedule.tasks').browse(cr,uid,sct_ids[0])
+			sct_ids = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
+			if sct_ids:
+				sct_obj = self.pool.get('schedule.tasks').browse(cr,uid,sct_ids[0])
 
-	# 			if sct_obj.visit_type == 'monthly':
-	# 				total = 1
-	# 			else:
-	# 				total = int(sct_obj.visit_type)
-	# 			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
-	# 			result[obj.id] = total - len(survey_ids)
-	# 			if result[obj.id] < 0:
-	# 				result[obj.id] = 0
-	# 		else:
+				if sct_obj.visit_type == 'monthly':
+					total = 1
+				else:
+					total = int(sct_obj.visit_type)
+				survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+				result[obj.id] = total - len(survey_ids)
+				if result[obj.id] < 0:
+					result[obj.id] = 0
+			else:
 
-	# 			result[obj.id] = 0
+				result[obj.id] = 0
 
-	# 	return result
+		return result
 
-	# def __count_visits3(self, cr, uid, ids, name, arg, context=None):
+	def __count_visits3(self, cr, uid, ids, name, arg, context=None):
 
-	# 	result = {}
-	# 	mnth = self.CurrentMonth(cr,uid,context=None)
-	# 	for obj in self.browse(cr, uid, ids, context=context):
-	# 		survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+		result = {}
+		mnth = self.CurrentMonth(cr,uid,context=None)
+		for obj in self.browse(cr, uid, ids, context=context):
+			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
 
-	# 		sct_ids = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
-	# 		if sct_ids:
-	# 			sct_obj = self.pool.get('schedule.tasks').browse(cr,uid,sct_ids[0])
+			sct_ids = self.pool.get('schedule.tasks').search(cr,uid,[('atm','=',obj.id),('status','!=','cancel')])
+			if sct_ids:
+				sct_obj = self.pool.get('schedule.tasks').browse(cr,uid,sct_ids[0])
 
-	# 			if sct_obj.visit_type == 'monthly':
-	# 				result[obj.id] = 1
-	# 			else:
-	# 				result[obj.id] = sct_obj.visit_type
-	# 		else:
+				if sct_obj.visit_type == 'monthly':
+					result[obj.id] = 1
+				else:
+					result[obj.id] = sct_obj.visit_type
+			else:
 
-	# 			survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
-	# 			result[obj.id] = len(survey_ids)
+				survey_ids = self.pool.get('survey.details').search(cr,uid,[('month','=',mnth),('atm_surv','=',obj.id),('status','=','approved')])
+				result[obj.id] = len(survey_ids)
 
-	# 	return result
+		return result
 	
 
 
@@ -169,9 +169,9 @@ class ATM_details(osv.osv):
 		'ded_num' : fields.char('DED Number'),
 		'atm_id2':fields.char('ATM ID'),
 		'serial_no':fields.char('ATM Serial No.'),
-		# 'visits_done':fields.function(__count_visits1,type='integer',string="Visits Done",method=True, store = False, multi=False),
-		# 'visits_left':fields.function(__count_visits2,type='integer',string="Visits Left",method=True, store=False, multi=False),
-		# 'visits_total':fields.function(__count_visits3,type='integer',string="Required Visits",method=True, store=False, multi=False),
+		'visits_done':fields.function(__count_visits1,type='integer',string="Visits Done",method=True, store = False, multi=False),
+		'visits_left':fields.function(__count_visits2,type='integer',string="Visits Left",method=True, store=False, multi=False),
+		'visits_total':fields.function(__count_visits3,type='integer',string="Required Visits",method=True, store=False, multi=False),
 		
 	
 		}
@@ -231,16 +231,7 @@ class ATM_details(osv.osv):
 
 			# if object.name:
 			if object.latitude and object.longitude:
-				# print "oooooooooooooooooo",object.name
-				# print "o11111111111111111o",object.atm_id
-				# print "o22222222222222222o",object.latitude
-				# print "o33333333333333333o",object.longitude
-				# x=(object.name+', '+object.atm_id+', '+'%%'+object.latitude+'%%'+object.longitude)
-				# print "999999999999999",type(str(x))
-				# print "o55555555555555555o",type(object.id )
-				# print "o66666666666666666o",object.name
-				# print "o777777777777777777o",object.name
-				  # name for contact_address_id field
+				
 				res.append((str(object.id),str(object.name+', '+object.atm_id+', '+'%%'+object.latitude+'%%'+object.longitude)))
 			else:
 			   # //name for contact_id field                     

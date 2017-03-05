@@ -6,7 +6,20 @@ class Customer_Details(osv.osv):
 
 	_name = 'customer.info'
 
-	 		
+	def _get_image(self, cr, uid, ids, name, args, context=None):
+		result = dict.fromkeys(ids, False)
+		for obj in self.browse(cr, uid, ids, context=context):
+		    result[obj.id] = tools.image_get_resized_images(obj.image)
+		return result
+	def _set_image(self, cr, uid, id, name, value, args, context=None):
+        	return self.write(cr, uid, [id], {'image': tools.image_resize_image_big(value)}, context=context)
+
+	def _has_image(self, cr, uid, ids, name, args, context=None):
+		result = {}
+		for obj in self.browse(cr, uid, ids, context=context):
+		    result[obj.id] = obj.image != False
+		return result
+		
 	def _show_tasks(self, cr, uid, ids, name, args, context=None):
 		res = {}
 		c_ids = self.pool.get('tasks.queue').search(cr,uid,[('customer','=',ids[0])])
@@ -20,8 +33,25 @@ class Customer_Details(osv.osv):
 		'customer_code':fields.char('Customer Code'),
 		'name':fields.char('Customer name'),
 		'image': fields.binary("Image",help="This field holds the image used as avatar for this contact, limited to 1024x1024px"),
-	
-        'country_id':fields.many2one('res.country','Country',domain="[('code','=','AE')]"),
+		'image_medium': fields.function(_get_image, fnct_inv=_set_image,
+			string="Medium-sized image", type="binary", multi="_get_image",
+			store={
+				'customer.info': (lambda self, cr, uid, ids, c={}: ids, ['image'], 10),
+			},
+			help="Medium-sized image of this contact. It is automatically "\
+				 "resized as a 128x128px image, with aspect ratio preserved. "\
+				 "Use this field in form views or some kanban views."),	
+		'image_small': fields.function(_get_image, fnct_inv=_set_image,
+					string="Small-sized image", type="binary", multi="_get_image",
+					store={
+					'customer.info': (lambda self, cr, uid, ids, c={}: ids, ['image'], 10),
+				 },
+				 help="Small-sized image of this contact. It is automatically "\
+					 "resized as a 64x64px image, with aspect ratio preserved. "\
+					"Use this field anywhere a small image is required."),
+		'has_image': fields.function(_has_image, type="boolean"),
+		
+		'country_id':fields.many2one('res.country','Country',domain="[('code','=','AE')]"),
 		'address':fields.text('Address'),
 		'contact_person':fields.char('Contact Person'),
 		'contact_email':fields.char('Contact Person Email'),
@@ -40,7 +70,7 @@ class Customer_Details(osv.osv):
 	}
 
 	def create(self, cr, uid, vals, context=None):
-		vals['customer_code'] = self.pool.get('ir.sequence').get(cr, uid, 'customer.info')
+		vals['customer_code'] = self.pool.get('ir.sequence').get(cr, uid, 'customer.det')
 		return super(Customer_Details, self).create(cr, uid, vals, context=context)
 
 	# code to get default country name

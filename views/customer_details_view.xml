@@ -26,13 +26,13 @@
 					
 				<form string="Customer Details">
 					<sheet>
-					<field name="image" widget='image' class="oe_left oe_avatar"/>
+					<field name="image" widget='image' class="oe_left oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
 					<div class="oe_title">
 						<h2>
 							<field name="customer_code" string="Customer Code" readonly="1"/>
 							<field name="name" default_focus="1" required="1" placeholder="Customer Name" string="Customer Name"/>
 						</h2>
-						<button name="send_invitation" type="object" String="Portal Access"  confirm="Are you sure? want to make this customer as your portal user??" help="Sends the invitation mail to the customer with login credentials &amp; Makes this customer as your portal User"/>
+						<button name="send_invitation" type="object" String="Portal Access"  confirm="Are you sure? want to make this customer as your portal user??" help="Sends the invitation mail to the customer with login credentials &amp; Makes this customer as your portal User" groups="transtech.group_atm_manager"/>
 					</div>
 					<group>
 						<group>
@@ -80,6 +80,11 @@
 				<field name="name">Customer Details</field>
 				<field name='res_model'>customer.info</field>
 				<field name="view_mode">tree,form</field>
+				<field name="help" type="html">
+              		<p class="oe_view_nocontent_create">
+                		click to add new Customer details......
+              		</p>
+               	</field>
 			</record>
 			 
 			<menuitem name="Customer/ATM Setup" id="customer_atm_setup" parent="atm_survey_management" sequence="2"/>

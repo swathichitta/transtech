@@ -2,7 +2,6 @@
 	<openerp>
 	    <data>
 
-			<!-- sequence no for task in queue-->
 			<record id="seq_tasks_inqueue" model="ir.sequence.type"> 
 				<field name="name">Tasks In Queue</field> 
 				<field name="code">tasks.queue</field> 
@@ -14,19 +13,17 @@
 				<field name="padding">9</field> 
 			</record>
 
-			<!-- sequence no for alerts for you-->
 			<record id="seq_alerts_foru" model="ir.sequence.type"> 
-				<field name="name">Alerts For You</field> 
-				<field name="code">alert.you</field> 
+				<field name="name">Internal Alerts</field> 
+				<field name="code">alert.dash</field> 
 			</record> 
 			<record id="alerts_foru" model="ir.sequence"> 
-				<field name="name">Alerts For You</field> 
-				<field name="code">alert.you</field> 
+				<field name="name">Internal Alerts</field> 
+				<field name="code">alert.dash</field> 
 				<field name="prefix">INALERT</field> 
 				<field name="padding">3</field> 
 			</record>
 
-			<!-- sequence no for task completed/cancelled-->
 			<record id="seq_tasks_status" model="ir.sequence.type"> 
 				<field name="name">Tasks Completed/Cancelled</field> 
 				<field name="code">task.status</field> 
@@ -38,7 +35,6 @@
 				<field name="padding">5</field> 
 			</record>
 
-			<!-- sequence no for customer details-->
 			<record id="seq_customer_details" model="ir.sequence.type"> 
 				<field name="name">Customer Details</field> 
 				<field name="code">customer.det</field> 
@@ -46,11 +42,10 @@
 			<record id="customer_details" model="ir.sequence"> 
 				<field name="name">Customer Details</field> 
 				<field name="code">customer.det</field> 
-				<field name="prefix">CUS</field> 
-				<field name="padding">4</field> 
+				<field name="prefix">CUS1</field> 
+				<field name="padding">3</field> 
 			</record>
 
-			<!-- sequence no for atm details-->
 			<record id="seq_atm_details" model="ir.sequence.type"> 
 				<field name="name">ATM Details</field> 
 				<field name="code">atm.det</field> 
@@ -62,7 +57,6 @@
 				<field name="padding">4</field> 
 			</record>
 
-			<!-- sequence no for site inspection form-->
 			<record id="seq_site_inspection" model="ir.sequence.type"> 
 				<field name="name">Site Inspection</field> 
 				<field name="code">site.insp</field> 
@@ -74,7 +68,6 @@
 				<field name="padding">3</field> 
 			</record>
 
-			<!-- sequence no for survey details-->
 			<record id="seq_survey_details" model="ir.sequence.type"> 
 				<field name="name">Survey Details</field> 
 				<field name="code">survey.det</field> 
@@ -86,31 +79,17 @@
 				<field name="padding">5</field> 
 			</record>
 
-			<!-- sequence no for view and plan tasks-->
-			<!-- <record id="seq_plan_tasks" model="ir.sequence.type"> 
-				<field name="name">View Tasks</field> 
-				<field name="code">view.tasks</field> 
-			</record> 
-			<record id="plan_tasks" model="ir.sequence"> 
-				<field name="name">View Tasks</field> 
-				<field name="code">view.tasks</field> 
-				<field name="prefix">TASK</field> 
-				<field name="padding">9</field> 
-			</record> -->
-
-			<!-- sequence no for schedule tasks-->
 			<record id="seq_scheduling_tasks" model="ir.sequence.type"> 
 				<field name="name">Schedule Tasks</field> 
-				<field name="code">schedule.tasks</field> 
+				<field name="code">sched.tasks</field> 
 			</record> 
 			<record id="scheduling_tasks" model="ir.sequence"> 
 				<field name="name">Schedule Tasks</field> 
-				<field name="code">schedule.tasks</field> 
+				<field name="code">sched.tasks</field> 
 				<field name="prefix">SCHED TASK</field> 
 				<field name="padding">5</field> 
 			</record>
 
-			<!-- sequence no for customer alerts-->
 			<record id="seq_customer_alerts" model="ir.sequence.type"> 
 				<field name="name">Customer Alerts</field> 
 				<field name="code">cust.alerts</field> 
@@ -122,7 +101,6 @@
 				<field name="padding">5</field> 
 			</record>
 
-			<!-- sequence no for remark category -->
 			<record id="seq_remark_category" model="ir.sequence.type"> 
 				<field name="name">Remark Category</field> 
 				<field name="code">remark.cat</field> 
@@ -134,8 +112,6 @@
 				<field name="padding">3</field> 
 			</record>
 
-
-			<!-- sequence no for res.users-->
 			<record id="res_users_id" model="ir.sequence.type"> 
 				<field name="name">Res Users</field> 
 				<field name="code">res.id</field> 

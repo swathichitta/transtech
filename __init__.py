@@ -1,5 +1,7 @@
 import wizard
 import custom_res_users
+import customer_alerts
+
 import plan_tasks
 import internal_alerts
 
@@ -12,7 +14,6 @@ import atm_details
 import site_inspection
 import survey_details
 import schedule_tasks
-import customer_alerts
 import public_holidays
 import state_setup
 import reason_code_setup

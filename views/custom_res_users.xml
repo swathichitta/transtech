@@ -3,6 +3,10 @@
 	<openerp>
 		<data>
 
+			<record model="ir.ui.menu" id="base.menu_reporting">
+			    <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+			</record> 
+			
 			<record model="ir.ui.view" id="custom_res_users_form">
 				<field name="name">custom.res.users.form</field>
 				<field name="model">res.users</field>

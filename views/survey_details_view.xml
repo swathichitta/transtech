@@ -9,12 +9,12 @@
 				<field name="arch" type="xml">
 					<tree string="Customer Information">
 						<field name="name" readonly="1"/>
-						<field name="surv_task"/>
+						<field name="surv_task" groups="transtech.group_atm_manager"/>
 						<field name="month"/>
 						<field name="atm_surv"/>
 						<field name="state"/>
 						<field name="customer_surv"/>
-						<field name="surveyor_surv"/>
+						<field name="surveyor_surv" groups="transtech.group_atm_manager, transtech.group_atm_user"/>
 						<field name="visit_tm"/>
 						<field name="status"/>
 					</tree>
@@ -27,32 +27,32 @@
 				<field name="type">form</field>
 				<field name="arch" type="xml">
 					
-					<form string="Survey Details New" version="7.0">
-				<header>
-					<button name="%(action_survey_approve_wizard)d" type="action" String="Approve"  class="oe_highlight"  attrs="{'invisible': [('status','=','approved')]}"/>
-					
-					<button name="%(action_pics_survey_wizard)d" string="Upload Images" type="action"/>
+					<form string="Survey Details New">
+						<header>
+							<button name="%(action_survey_approve_wizard)d" type="action" String="Approve" groups="transtech.group_atm_manager" class="oe_highlight" confirm="Are you sure?? want to approve this survey??" attrs="{'invisible': [('status','=','approved')]}"/>
+							
+							<button name="%(action_pics_survey_wizard)d" string="Upload Images" type="action" groups="transtech.group_atm_manager,transtech.group_atm_user"/>
 
-					<field name="status" widget="statusbar" statusbar_visible="waiting_approval,approved"/>
-					
-				</header>
+							<field name="status" widget="statusbar" statusbar_visible="waiting_approval,approved"/>
+							
+						</header>
 				<sheet>
 					
 					<!-- <group> -->
 						<group col="2">
 								<field name="name" readonly="1"/>
 								<field name="is_nbad" invisible="1"/>
-								<field name="surv_task" on_change="onchange_taskid(surv_task)" style="width:40%%"/>
+								<field name="surv_task" on_change="onchange_taskid(surv_task)" style="width:40%%" groups="transtech.group_atm_manager"/>
 								<field name="month" style="width:40%%"/>
 								<field name="remarks_survey" style="width:40%%"/>
 								<field name="atm_surv" style="width:40%%"/>
 								<field name="customer_surv" style="width:40%%"/>
-								<field name="surveyor_surv" style="width:40%%"/>
+								<field name="surveyor_surv" style="width:40%%" groups="transtech.group_atm_manager, transtech.group_atm_user"/>
 								<field name="visit_tm" style="width:40%%"/>
-								<field name="cur_longitude" style="width:40%%"/>
-								<field name="cur_latitude" style="width:40%%"/>
-								<field name="nxt_survey_distance" style="width:40%%"/>
-								<field name="nxt_taskid" style="width:40%%"/>
+								<field name="cur_longitude" style="width:40%%" groups="transtech.group_atm_manager"/>
+								<field name="cur_latitude" style="width:40%%" groups="transtech.group_atm_manager"/>
+								<field name="nxt_survey_distance" style="width:40%%" groups="transtech.group_atm_manager"/>
+								<field name="nxt_taskid" style="width:40%%" groups="transtech.group_atm_manager"/>
 								<field name="state" style="width:40%%"/>
 									
 							</group>
@@ -184,7 +184,7 @@
 									<field name="fascia_condition" attrs="{'invisible': [('check_list1', '=',True)]}" style="width:20%%"/>
 								</group>
 							   </page>
-							   <!-- <page string="Branding Audit Checklist" attrs="{'invisible': [('is_nbad', '=',False)]}">
+							   <page string="Branding Audit Checklist" attrs="{'invisible': [('is_nbad', '=',False)]}">
 							   	<group>
 									<group>
 										<field name="dl_brochure_holder"/>
@@ -215,7 +215,7 @@
 										<field name="other_compaign" style="width:40%%"/>
 									</group>
 								</group>
-							</page> -->
+							</page>
 						</notebook>
 					</sheet>
 				</form>		

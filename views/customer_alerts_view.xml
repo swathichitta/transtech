@@ -27,36 +27,36 @@
 					<form>
 						<header>
 							<button name="send_attachments" type="object" String="Send"/>
-							<button name="status_resolve" type="object" String="Resolve" attrs="{'invisible': [('status','in',('resolved','closed'))]}" class="oe_highlight"/>
-							<button name="status_close" type="object" String="Close"  attrs="{'invisible': [('status','in',('assigned','closed'))]}" class="oe_highlight"/>
+							<button name="status_resolve" type="object" String="Resolve" attrs="{'invisible': [('status','in',('resolved','closed'))]}" class="oe_highlight" groups="transtech.group_atm_manager, transtech.group_atm_user"/>
+							<button name="status_close" type="object" String="Close"  attrs="{'invisible': [('status','in',('assigned','closed'))]}" class="oe_highlight" groups="transtech.group_atm_manager, transtech.group_atm_user"/>
 							<field name="status" widget="statusbar" statusbar_visible="assigned,resolved,closed"/> 
 						</header>
 						<sheet>
 							<group>
 								<group>
 									<field name="name_id" readonly="1"/>
-									<field name="customer"/>
-									<field name="created_by" invisible="1"/>
-									<field name="atm_id" required="1"/>
-									<field name="category" required="1"/>
-									<field name="priority" required="1"/>
-									<field name="country_id" />
-									<field name="state_id" />
+									<field name="customer" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="created_by" invisible="1" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="atm_id" required="1" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="category" required="1" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="priority" required="1" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="country_id" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="state_id" attrs="{'readonly':[('status','!=','assigned')]}"/>
 									<field name="submitted_by" readonly="1"/>
 								</group>
 								<group string="Alert Categorization Details">
-									<field name="reason_id"/>
-									<field name="reason_disc"/>
+									<field name="reason_id" attrs="{'readonly':[('status','!=','assigned')]}"/>/>
+									<field name="reason_disc" attrs="{'readonly':[('status','!=','assigned')]}"/>
 								</group>
 								<group string="Summary &amp; Description">
-									<field name="summary" />
-									<field name="description"/>
+									<field name="summary" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="description" attrs="{'readonly':[('status','!=','assigned')]}"/>
 								</group>
 								<newline/>
 								<group string="Error Images">
-									<field name="image" widget="image" nolabel="1" class="oe_avatar oe_left" />
-									<field name="image_2" widget="image" nolabel="1" class="oe_avatar oe_left"/>
-									<field name="image_3" widget="image" nolabel="1" class="oe_avatar oe_left"/>
+									<field name="image" widget="image" nolabel="1" class="oe_avatar oe_left" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="image_2" widget="image" nolabel="1" class="oe_avatar oe_left" attrs="{'readonly':[('status','!=','assigned')]}"/>
+									<field name="image_3" widget="image" nolabel="1" class="oe_avatar oe_left" attrs="{'readonly':[('status','!=','assigned')]}"/>
 								</group>
 							</group>
 						</sheet>			
@@ -64,10 +64,28 @@
 				</field>
 			</record>
 
+			<record id="view_alert_info_filter" model="ir.ui.view">
+	            <field name="name">customer.alerts.select</field>
+	            <field name="model">customer.alerts</field>
+	            <field name="arch" type="xml">
+	                <search string="Search Details">
+						<group string="Search">
+							<field name="summary" filter_domain="[('summary','ilike', self)]" string="Summary"/>
+							<filter string="ATM" domain="[('atm_id','=',1)]" context="{'group_by':'atm_id'}"/>
+						</group>
+					</search>
+				</field>
+			</record>
+
 			<record model='ir.actions.act_window' id='customers_alerts_action'>
 				<field name="name">Customer Alerts</field>
 				<field name='res_model'>customer.alerts</field>
 				<field name="view_mode">tree,form</field>
+				<field name="help" type="html">
+              		<p class="oe_view_nocontent_create">
+                		Click to add new Alerts......
+              		</p>
+               	</field>
 			</record>
 			 
 			<menuitem name="Alerts" id="alerts_left_id" parent="atm_survey_management" sequence="5"/>

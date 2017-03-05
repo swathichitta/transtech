@@ -66,6 +66,11 @@
 				<field name="name">Site Inspection Form</field>
 				<field name='res_model'>site.inspection</field>
 				<field name="view_mode">tree,form</field>
+				<field name="help" type="html">
+      				<p class="oe_view_nocontent_create">
+        				Click to create details for your Site Inspection...
+      				</p>
+       			</field>
 			</record>
 			 
 			<menuitem id="survey_details_left" name="Survey Details" parent="atm_survey_management" sequence="3"/>
